@@ -43,6 +43,8 @@ function reloadGrid() {
 
 function clearButton() {
     gridcontainer.innerHTML = '';
+    document.getElementById("boxRange").value = "16";
+    document.getElementById("demo").innerHTML= "16";
 }
 
 //Function to change grid size
