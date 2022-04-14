@@ -1,16 +1,21 @@
-const container = document.querySelector("#container");
-const clearButton = document.querySelector(".button1")
+const gridcontainer = document.querySelector("#gridcontainer");
+const button = document.querySelector(".button1")
+const input = document.querySelector("input");
+const slider = document.getElementById("boxRange");
+let output = document.getElementById("demo");
+
+output.innerHTML = slider.value;
 
 //Create the grid
 function makeGrid (rows, columns) {
-    container.style.setProperty('--grid-rows', rows);
-    container.style.setProperty('--grid-cols', columns);
-    
+    gridcontainer.style.setProperty('--grid-rows', rows);
+    gridcontainer.style.setProperty('--grid-cols', columns);
+
     for (let i = 0; i < (rows * columns); i++) {
         const boxElement = document.createElement("div");
         boxElement.classList.add('boxElement');
         boxElement.addEventListener('mouseover', hoverColor);
-        container.appendChild(boxElement);
+        gridcontainer.appendChild(boxElement);
     }  
 };
 
@@ -29,13 +34,26 @@ function hoverColor($event) {
 }
 
 // Functions to clear and reload grid
-clearButton.addEventListener("click", reloadGrid)
+button.addEventListener("click", reloadGrid)
 
 function reloadGrid() {
-    clearGrid();
+    clearButton();
     makeGrid(16, 16);
 }
 
-function clearGrid() {
-    container.innerHTML = '';
+function clearButton() {
+    gridcontainer.innerHTML = '';
+}
+
+//Function to change grid size
+function gridSize() {
+    let grids = gridcontainer.querySelectorAll(".boxElement");
+    grids.forEach(boxElement => boxElement.remove());
+    makeGrid(slider.value, slider.value);
+}
+
+//Function to display grid size
+slider.addEventListener("mouseup", gridSize);
+slider.oninput = function() {
+    output.innerHTML = this.value;
 }
